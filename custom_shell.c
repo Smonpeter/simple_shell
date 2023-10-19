@@ -19,7 +19,7 @@ char *swap_char(char *input, int bool)
 			if (input[i] == '|')
 			{
 				if (input[i + 1] != '|')
-					input[i] = 16; // Replace | with ASCII character 16 (DLE)
+					input[i] = 16; /* Replace | with ASCII character 16 (DLE)*/
 				else
 					i++;
 			}
@@ -27,7 +27,7 @@ char *swap_char(char *input, int bool)
 			if (input[i] == '&')
 			{
 				if (input[i + 1] != '&')
-					input[i] = 12; // Replace & with ASCII character 12 (FF)
+					input[i] = 12; /* Replace & with ASCII character 12 (FF)*/
 				else
 					i++;
 			}
@@ -58,24 +58,24 @@ void add_nodes(sep_list **head_s, line_list **head_l, char *input)
 	int i;
 	char *line;
 
-	input = swap_char(input, 0); // Swap non-printed characters in the input
+	input = swap_char(input, 0); /* Swap non-printed characters in the input*/
 
 	for (i = 0; input[i]; i++)
 	{
 		if (input[i] == ';')
-			add_sep_node_end(head_s, input[i]); // Add a separator node for ;
+			add_sep_node_end(head_s, input[i]); /* Add a separator node for ;*/
 
 		if (input[i] == '|' || input[i] == '&')
 		{
-			add_sep_node_end(head_s, input[i]); // Add a separator node for | or &
+			add_sep_node_end(head_s, input[i]); /* Add a separator node for | or &*/
 			i++;
 		}
 	}
 
-	line = _strtok(input, ";|&"); // Tokenize the input based on separators
+	line = _strtok(input, ";|&"); /* Tokenize the input based on separators*/
 	do {
-		line = swap_char(line, 1); // Reverse the swap of non-printed characters
-		add_line_node_end(head_l, line); // Add a command line to the list
+		line = swap_char(line, 1); /* Reverse the swap of non-printed characters*/
+		add_line_node_end(head_l, line); /* Add a command line to the list*/
 		line = _strtok(NULL, ";|&");
 	} while (line != NULL);
 
@@ -141,7 +141,7 @@ int split_commands(data_shell *datash, char *input)
 	head_s = NULL;
 	head_l = NULL;
 
-	add_nodes(&head_s, &head_l, input); // Add separators and command lines to lists
+	add_nodes(&head_s, &head_l, input); /* Add separators and command lines to lists*/
 
 	list_s = head_s;
 	list_l = head_l;
@@ -149,14 +149,14 @@ int split_commands(data_shell *datash, char *input)
 	while (list_l != NULL)
 	{
 		datash->input = list_l->line;
-		datash->args = split_line(datash->input); // Tokenize the command line
-		loop = exec_line(datash); // Execute the command
+		datash->args = split_line(datash->input); /* Tokenize the command line*/
+		loop = exec_line(datash); /* Execute the command*/
 		free(datash->args);
 
 		if (loop == 0)
 			break;
 
-		go_next(&list_s, &list_l, datash); // Move to the next command line
+		go_next(&list_s, &list_l, datash); /* Move to the next command line*/
 
 		if (list_l != NULL)
 			list_l = list_l->next;
